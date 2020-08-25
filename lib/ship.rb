@@ -10,4 +10,8 @@ attr_reader :name, :length, :health
   def sunk?
     health == 0
   end
+
+  def hit
+    @health -= 1
+  end
 end
