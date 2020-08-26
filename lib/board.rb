@@ -27,6 +27,23 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
+    valid_length?(ship, coordinates) &&
+    valid_row_or_column?(ship, coordinates)
+  end
+
+  def valid_length?(ship, coordinates)
     ship.length == coordinates.length
+  end
+
+  def valid_row_or_column?(ship, coordinates)
+    first = coordinates.map do |coordinate|
+      coordinate[0]
+    end
+
+    second = coordinates.map do |coordinate|
+      coordinate[1]
+    end
+
+    second.uniq.length == 1 || first.uniq.length == 1
   end
 end
