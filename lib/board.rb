@@ -86,4 +86,17 @@ class Board
     end
     overlap
   end
+
+  def render(show = false)
+     board =  "  1 2 3 4 \n" +
+              "A . . . . \n" +
+              "B . . . . \n" +
+              "C . . . . \n" +
+              "D . . . . \n"
+
+    cells.map do |coordinate, cell|
+       board.sub!(".", cell.render(show))
+    end
+    board
+  end
 end
