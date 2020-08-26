@@ -72,9 +72,7 @@ class Board
 
   def place(ship, coordinates)
     coordinates.each do |coordinate|
-      require "pry"; binding.pry
-      @cells[coordinate]
+      @cells[coordinate].place_ship(ship)
     end
-
   end
 end
