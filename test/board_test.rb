@@ -10,4 +10,12 @@ class BoardTest < Minitest::Test
 
     assert_instance_of Board, board
   end
-end 
+
+  def test_it_has_cells
+    board = Board.new
+
+    assert_instance_of Hash, board.cells
+    assert_equal 16, board.cells.length
+    assert_instance_of Cell, board.cells["A1"]
+  end
+end
