@@ -29,7 +29,8 @@ class Board
   def valid_placement?(ship, coordinates)
     valid_length?(ship, coordinates) &&
     no_diagonals?(ship, coordinates) &&
-    consecutive?(ship, coordinates)
+    consecutive?(ship, coordinates) &&
+    not_overlapping?(ship, coordinates)
   end
 
   def valid_length?(ship, coordinates)
@@ -75,4 +76,9 @@ class Board
       @cells[coordinate].place_ship(ship)
     end
   end
+
+  def not_overlapping?(ship, coordinates)
+    
+  end
+
 end
