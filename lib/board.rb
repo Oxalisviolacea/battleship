@@ -28,7 +28,8 @@ class Board
 
   def valid_placement?(ship, coordinates)
     valid_length?(ship, coordinates) &&
-    no_diagonals?(ship, coordinates)
+    no_diagonals?(ship, coordinates) &&
+    consecutive?(ship, coordinates)
   end
 
   def valid_length?(ship, coordinates)
@@ -45,5 +46,27 @@ class Board
     end
 
     second.uniq.length == 1 || first.uniq.length == 1
+  end
+
+  def consecutive?(ship, coordinates)
+    first_chars = coordinates.map do |coordinate|
+      coordinate[0]
+    end
+
+    second_chars = coordinates.map do |coordinate|
+      coordinate[1].to_i
+    end
+
+    consecutive_letters = []
+    ('A'..'D').each_cons(ship.length) do |letter|
+      consecutive_letters << letter
+    end
+
+    consecutive_numbers = []
+    (1..4).each_cons(ship.length) do |number|
+      consecutive_numbers << number
+    end
+
+    consecutive_letters.include?(first_chars) || consecutive_numbers.include?(second_chars)
   end
 end
