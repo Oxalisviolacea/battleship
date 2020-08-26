@@ -18,4 +18,14 @@ class BoardTest < Minitest::Test
     assert_equal 16, board.cells.length
     assert_instance_of Cell, board.cells["A1"]
   end
+
+  def test_valid_coordinates
+    board = Board.new
+
+    assert board.valid_coordinate?("A1")
+    assert board.valid_coordinate?("D4")
+    refute board.valid_coordinate?("A5")
+    refute board.valid_coordinate?("E1")
+    refute board.valid_coordinate?("A22")
+  end
 end
