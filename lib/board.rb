@@ -69,4 +69,12 @@ class Board
 
     consecutive_letters.include?(first_chars) || consecutive_numbers.include?(second_chars)
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      require "pry"; binding.pry
+      @cells[coordinate]
+    end
+
+  end
 end
