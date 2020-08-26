@@ -52,4 +52,15 @@ class BoardTest < Minitest::Test
     assert board.valid_placement?(cruiser, ["A1", "A2", "A3"])
     assert board.valid_placement?(submarine, ["A1", "B1"])
   end
+
+  def test_it_has_no_diagonals
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    refute board.valid_placement?(cruiser, ["A1", "B2", "C3"])
+    refute board.valid_placement?(submarine, ["C2", "D3"])
+    assert board.valid_placement?(cruiser, ["A1", "B1", "C1"])
+    assert board.valid_placement?(submarine, ["C2", "C3"])
+  end
 end
