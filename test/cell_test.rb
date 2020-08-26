@@ -42,4 +42,15 @@ class CellTest < Minitest::Test
 
     refute cell.fired_upon?
   end
+
+  def test_it_can_be_fired_upon
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+
+    cell.place_ship(cruiser)
+    cell.fire_upon
+
+    assert_equal 2, cell.ship.health
+    assert cell.fired_upon?
+  end 
 end
