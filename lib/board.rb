@@ -29,7 +29,8 @@ class Board
   def valid_placement?(ship, coordinates)
     valid_length?(ship, coordinates) &&
     no_diagonals?(ship, coordinates) &&
-    consecutive?(ship, coordinates)
+    consecutive?(ship, coordinates) &&
+    !overlapping?(ship, coordinates)
   end
 
   def valid_length?(ship, coordinates)
@@ -72,9 +73,30 @@ class Board
 
   def place(ship, coordinates)
     coordinates.each do |coordinate|
-      require "pry"; binding.pry
-      @cells[coordinate]
+      @cells[coordinate].place_ship(ship)
     end
+  end
 
+  def overlapping?(ship, coordinates)
+    overlap = false
+    coordinates.each do |coordinate|
+      if !cells[coordinate].empty?
+        overlap = true
+      end
+    end
+    overlap
+  end
+
+  def render(show = false)
+     board =  "  1 2 3 4 \n" +
+              "A . . . . \n" +
+              "B . . . . \n" +
+              "C . . . . \n" +
+              "D . . . . \n"
+
+    cells.map do |coordinate, cell|
+       board.sub!(".", cell.render(show))
+    end
+    board
   end
 end
