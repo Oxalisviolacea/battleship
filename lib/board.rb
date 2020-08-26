@@ -28,14 +28,14 @@ class Board
 
   def valid_placement?(ship, coordinates)
     valid_length?(ship, coordinates) &&
-    valid_row_or_column?(ship, coordinates)
+    no_diagonals?(ship, coordinates)
   end
 
   def valid_length?(ship, coordinates)
     ship.length == coordinates.length
   end
 
-  def valid_row_or_column?(ship, coordinates)
+  def no_diagonals?(ship, coordinates)
     first = coordinates.map do |coordinate|
       coordinate[0]
     end
