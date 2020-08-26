@@ -30,7 +30,7 @@ class Board
     valid_length?(ship, coordinates) &&
     no_diagonals?(ship, coordinates) &&
     consecutive?(ship, coordinates) &&
-    not_overlapping?(ship, coordinates)
+    !overlapping?(ship, coordinates)
   end
 
   def valid_length?(ship, coordinates)
@@ -77,8 +77,13 @@ class Board
     end
   end
 
-  def not_overlapping?(ship, coordinates)
-    
+  def overlapping?(ship, coordinates)
+    overlap = false
+    coordinates.each do |coordinate|
+      if !cells[coordinate].empty?
+        overlap = true
+      end
+    end
+    overlap
   end
-
 end
