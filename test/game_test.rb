@@ -1,35 +1,29 @@
 =begin
-  Show main menu
-    play or quit
+- start
+ call every method
 
-  if play, then start game
+- Show main menu
+     play or quit
+     if play, then start game
 
-  in start
+- make_computer_board
+    computer is placing ships randomly
+    iterate through cells.keys then board.place (some randomness)
 
-    set up
-      computer is placing ships randomly
-      iterate through cells.keys then board.place (some randomness)
+- make_player_board
+    user is prompted to place ships
+    valid coordinate?
+    valid placement?
+    if not those things, show error and re-prompt
 
-      user is prompted to place ships
-        valid coordinate?
-        valid placement?
-        if not those things, show error and re-prompt
-
-    play a turn (this should loop somehow until game is over/won?)
+- turn_loop
       turn methods
-      computer shot
-      player shot
+        computer shot
+        player shot
       board update
+      until has_lost?
 
-  game ending
-    check user or computer ships are all sunk?
+- game_ending(winner)
     if its ended show winner and final boards
       then return to the main menu again
-
-
-   start
-    set_up
-    play
-    game_ending
-  end 
 =end
