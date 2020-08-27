@@ -48,18 +48,45 @@ class TurnTest < Minitest::Test
     assert_equal boards, turn.display_boards
   end
 
-  =begin
-  User can choose a valid coordinate to fire upon
-    prompt the user for coordinate
-     find out if it is a valid_coordinate? and its not been fired upon previously then
-     cell.fire_upon
-    if coordinate is invalid, tell them they're wrong and prompt again
+  def test_player_can_fire
+    player_board = Board.new
+    computer_board = Board.new
 
-  Computer chooses a random shot (some condition where we win first)
-    cells.keys.sample unless cell.fired_upon?
+    turn = Turn.new(player_board, computer_board)
+    turn.player_shot("A1")
 
-  show message of the outcome of firing
-  display_boards
-  =end
+    assert computer_board.cells["A1"].fired_upon?
+    refute computer_board.cells["A2"].fired_upon?
+  end
 
+  def test_it_can_display_result
+    player_board = Board.new
+    computer_board = Board.new
+    submarine = Ship.new("Submarine", 2)
+    computer_board.place(submarine, ["B1", "B2"])
+    turn = Turn.new(player_board, computer_board)
+
+    turn.player_shot("A1")
+    miss_message = "Your shot on A1 missed."
+
+    assert_equal miss_message, turn.display_result("A1")
+
+    turn.player_shot("B1")
+    hit_message = "Your shot on B1 hit a ship."
+
+    assert_equal hit_message, turn.display_result("B1")
+
+    turn.player_shot("B2")
+    sink_message = "Your shot on B2 sunk a ship."
+
+    assert_equal sink_message, turn.display_result("B2")
+  end
 end
+
+=begin
+Computer chooses a random shot (some condition where we win first)
+  cells.keys.sample unless cell.fired_upon?
+
+show message of the outcome of firing
+display_boards
+=end
