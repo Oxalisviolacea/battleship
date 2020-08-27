@@ -48,4 +48,18 @@ class TurnTest < Minitest::Test
     assert_equal boards, turn.display_boards
   end
 
+  =begin
+  User can choose a valid coordinate to fire upon
+    prompt the user for coordinate
+     find out if it is a valid_coordinate? and its not been fired upon previously then
+     cell.fire_upon
+    if coordinate is invalid, tell them they're wrong and prompt again
+
+  Computer chooses a random shot (some condition where we win first)
+    cells.keys.sample unless cell.fired_upon?
+
+  show message of the outcome of firing
+  display_boards
+  =end
+
 end
