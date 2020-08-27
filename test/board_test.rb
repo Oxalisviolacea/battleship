@@ -96,7 +96,7 @@ class BoardTest < Minitest::Test
     board.place(cruiser, ["A1", "A2", "A3"])
     board_output = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
     board_output_optional = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
-    require "pry"; binding.pry
+    
     assert_equal board_output, board.render
     assert_equal board_output_optional, board.render(true)
   end
