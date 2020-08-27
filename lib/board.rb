@@ -89,13 +89,13 @@ class Board
 
   def render(show = false)
      board =  "  1 2 3 4 \n" +
-              "A . . . . \n" +
-              "B . . . . \n" +
-              "C . . . . \n" +
-              "D . . . . \n"
+              "A A1 A2 A3 A4 \n" +
+              "B B1 B2 B3 B4 \n" +
+              "C C1 C2 C3 C4 \n" +
+              "D D1 D2 D3 D4 \n"
 
     cells.map do |coordinate, cell|
-       board.sub!(".", cell.render(show))
+       board.sub!(coordinate, cell.render(show))
     end
     board
   end

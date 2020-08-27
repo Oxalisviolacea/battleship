@@ -93,10 +93,10 @@ class BoardTest < Minitest::Test
   def test_it_can_render_board
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-    board.place(cruiser, ["A1", "A2", "A3"])
+    board.place(cruiser, ["B2", "B3", "B4"])
     board_output = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
-    board_output_optional = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
-    
+    board_output_optional = "  1 2 3 4 \nA . . . . \nB . S S S \nC . . . . \nD . . . . \n"
+
     assert_equal board_output, board.render
     assert_equal board_output_optional, board.render(true)
   end
