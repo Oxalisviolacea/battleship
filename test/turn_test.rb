@@ -59,7 +59,7 @@ class TurnTest < Minitest::Test
     refute computer_board.cells["A2"].fired_upon?
   end
 
-  def test_it_can_display_result
+  def test_it_can_display_player_shot_result
     player_board = Board.new
     computer_board = Board.new
     submarine = Ship.new("Submarine", 2)
@@ -69,24 +69,53 @@ class TurnTest < Minitest::Test
     turn.player_shot("A1")
     miss_message = "Your shot on A1 missed."
 
-    assert_equal miss_message, turn.display_result("A1")
+    assert_equal miss_message, turn.display_player_shot_result("A1")
 
     turn.player_shot("B1")
     hit_message = "Your shot on B1 hit a ship."
 
-    assert_equal hit_message, turn.display_result("B1")
+    assert_equal hit_message, turn.display_player_shot_result("B1")
 
     turn.player_shot("B2")
     sink_message = "Your shot on B2 sunk a ship."
 
-    assert_equal sink_message, turn.display_result("B2")
+    assert_equal sink_message, turn.display_player_shot_result("B2")
+  end
+
+  def test_computer_can_fire
+    player_board = Board.new
+    computer_board = Board.new
+
+    turn = Turn.new(player_board, computer_board)
+    turn.computer_shot
+
+    actual = player_board.cells.one? do |cell|
+              cell.fired_upon?
+             end
+
+    assert actual
+  end
+
+  def test_it_can_display_computer_shot_result
+    player_board = Board.new
+    computer_board = Board.new
+    submarine = Ship.new("Submarine", 2)
+    player_board.place(submarine, ["B1", "B2"])
+    turn = Turn.new(player_board, computer_board)
+
+    turn.computer_shot("A1")
+    miss_message = "My shot on A1 missed."
+
+    assert_equal miss_message, turn.display_computer_shot_result("A1")
+
+    turn.computer_shot("B1")
+    hit_message = "My shot on B1 hit a ship."
+
+    assert_equal hit_message, turn.display_computer_shot_result("B1")
+
+    turn.computer_shot("B2")
+    sink_message = "My shot on B2 sunk a ship."
+
+    assert_equal sink_message, turn.display_computer_shot_result("B2")
   end
 end
-
-=begin
-Computer chooses a random shot (some condition where we win first)
-  cells.keys.sample unless cell.fired_upon?
-
-show message of the outcome of firing
-display_boards
-=end
