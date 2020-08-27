@@ -21,6 +21,40 @@ class GameTest < Minitest::Test
     assert_instance_of Board, game.computer_board
   end
 
+  def test_it_makes_a_computer_board
+    game = Game.new
+
+    game.setup_computer_board
+
+    cells_with_a_ship = []
+    game.computer_board.cells.each do |coordinate, cell|
+      if !cell.empty?
+        cells_with_a_ship << cell
+      end
+    end
+
+    actual = cells_with_a_ship.length
+
+    assert_equal 5, actual
+  end
+
+  def test_it_makes_a_player_board
+    skip
+    game = Game.new
+
+    game.setup_player_board
+
+    cells_with_a_ship = []
+    game.player_board.cells.each do |coordinate, cell|
+      if !cell.empty?
+        cells_with_a_ship << cell
+      end
+    end
+
+    actual = cells_with_a_ship.length
+
+    assert_equal 5, actual
+  end
 end
 
 =begin
