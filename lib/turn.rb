@@ -48,11 +48,11 @@ class Turn
   end
 
   def display_computer_shot_result(coordinate)
-    if @computer_board.cells[coordinate].render == "X"
+    if @player_board.cells[coordinate].render == "X"
       puts "My shot on #{coordinate} sunk a ship."
-    elsif @computer_board.cells[coordinate].render == "H"
+    elsif @player_board.cells[coordinate].render == "H"
       puts "My shot on #{coordinate} hit a ship."
-    elsif @computer_board.cells[coordinate].render == "M"
+    elsif @player_board.cells[coordinate].render == "M"
       puts "My shot on #{coordinate} missed."
     end
   end

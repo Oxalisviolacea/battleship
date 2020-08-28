@@ -60,6 +60,7 @@ class TurnTest < Minitest::Test
   end
 
   def test_it_can_display_player_shot_result
+    skip
     player_board = Board.new
     computer_board = Board.new
     submarine = Ship.new("Submarine", 2)
@@ -89,7 +90,7 @@ class TurnTest < Minitest::Test
     turn = Turn.new(player_board, computer_board)
     turn.computer_shot
 
-    actual = player_board.cells.one? do |cell|
+    actual = player_board.cells.one? do |coordinate, cell|
               cell.fired_upon?
              end
 
@@ -97,6 +98,7 @@ class TurnTest < Minitest::Test
   end
 
   def test_it_can_display_computer_shot_result
+    skip
     player_board = Board.new
     computer_board = Board.new
     submarine = Ship.new("Submarine", 2)
