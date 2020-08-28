@@ -5,4 +5,4 @@ require './lib/turn'
 require './lib/game'
 
 game = Game.new
-game.start
+game.welcome
