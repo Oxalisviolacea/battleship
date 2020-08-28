@@ -56,23 +56,3 @@ class GameTest < Minitest::Test
     assert_equal 5, actual
   end
 end
-
-=begin
-- start
- call every method
-
-- Show main menu
-     play or quit
-     if play, then start game
-
-- turn_loop
-      turn methods
-        computer shot
-        player shot
-      board update
-      until has_lost?
-
-- game_ending(winner)
-    if its ended show winner and final boards
-      then return to the main menu again
-=end

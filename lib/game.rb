@@ -10,6 +10,20 @@ class Game
     @player_submarine = Ship.new("Submarine", 2)
   end
 
+  def welcome
+    user_input = ""
+    until user_input == "q"
+     puts "Welcome to BATTLESHIP\n
+     Enter p to play. Enter q to quit."
+     user_input = gets.chomp.downcase
+     if user_input == "p"
+       start
+     else
+       puts "Alright, maybe next time."
+     end
+    end
+  end
+
   def start
     setup_computer_board
     setup_player_board
@@ -79,19 +93,20 @@ class Game
   end
 
   def setup_player_board_message(ship)
-    "I have laid out my ships on the grid.
-    You now need to lay out your two ships.
-    The Cruiser is three units long and the Submarine is two units long.
-    #{player_board.render(true)}
-    Enter the squares for the #{ship.name} (#{ship.length} spaces):"
+    "I have laid out my ships on the grid.\n" +
+    "You now need to lay out your two ships.\n" +
+    "The Cruiser is three units long and the Submarine is two units long.\n" +
+    player_board.render(true) +
+    "Enter the squares for the #{ship.name} (#{ship.length} spaces):\n"
   end
 
   def play
     turn = Turn.new(player_board, computer_board)
+    puts turn.display_boards
     until game_over?
-     puts turn.display_boards
      turn.take_player_input
      turn.computer_shot
+     puts turn.display_boards
     end
   end
 
@@ -99,7 +114,7 @@ class Game
     if @computer_cruiser.sunk? && @computer_submarine.sunk?
       puts "You won!"
       return true
-    elsif @player_cruiser.sunk? && @player_cruiser.sunk?
+    elsif @player_cruiser.sunk? && @player_submarine.sunk?
       puts "I won!"
       return true
     end
