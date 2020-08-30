@@ -78,13 +78,11 @@ class Board
   end
 
   def overlapping?(ship, coordinates)
-    overlap = false
-    coordinates.each do |coordinate|
+    coordinates.find do |coordinate|
       if !cells[coordinate].empty?
-        overlap = true
+        return true
       end
     end
-    overlap
   end
 
   def render(show = false)
