@@ -73,6 +73,10 @@ class Game
       name = gets.chomp
       puts "What's the ship's length?"
       length = gets.chomp.to_i
+      until length <= @player_board.height || length <= @player_board.width
+        puts "Please enter a length smaller than the board dimensions of #{@player_board.width} by #{@player_board.height}:"
+        length = gets.chomp.to_i
+      end
 
       custom_player_ship = Ship.new(name, length)
       custom_computer_ship = Ship.new(name, length)
