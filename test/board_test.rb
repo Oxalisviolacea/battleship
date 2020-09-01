@@ -19,6 +19,13 @@ class BoardTest < Minitest::Test
     assert_instance_of Cell, board.cells["A1"]
   end
 
+  def test_it_has_length_and_width
+    board = Board.new(3, 5)
+
+    assert_equal 3, board.width
+    assert_equal 5, board.height
+  end
+
   def test_valid_coordinates
     board = Board.new
 
