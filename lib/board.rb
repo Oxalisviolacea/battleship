@@ -47,37 +47,37 @@ class Board
   end
 
   def no_diagonals?(ship, coordinates)
-    first = coordinates.map do |coordinate|
-      coordinate[0]
+    letters = coordinates.map do |coordinate|
+      coordinate.delete("^A-Z")
     end
 
-    second = coordinates.map do |coordinate|
-      coordinate[1]
+    numbers = coordinates.map do |coordinate|
+      coordinate.delete("^0-9")
     end
 
-    second.uniq.length == 1 || first.uniq.length == 1
+    letters.uniq.length == 1 || numbers.uniq.length == 1
   end
 
   def consecutive?(ship, coordinates)
-    first_chars = coordinates.map do |coordinate|
-      coordinate[0]
+    letters = coordinates.map do |coordinate|
+      coordinate.delete("^A-Z")
     end
 
-    second_chars = coordinates.map do |coordinate|
-      coordinate[1].to_i
+    numbers = coordinates.map do |coordinate|
+      coordinate.delete("^0-9")
     end
 
     consecutive_letters = []
-    ('A'..'D').each_cons(ship.length) do |letter|
+    rows.each_cons(ship.length) do |letter|
       consecutive_letters << letter
     end
 
     consecutive_numbers = []
-    (1..4).each_cons(ship.length) do |number|
+    columns.each_cons(ship.length) do |number|
       consecutive_numbers << number
     end
 
-    consecutive_letters.include?(first_chars) || consecutive_numbers.include?(second_chars)
+    consecutive_letters.include?(letters) || consecutive_numbers.include?(numbers)
   end
 
   def place(ship, coordinates)
@@ -95,11 +95,14 @@ class Board
   end
 
   def render(show = false)
-     board =  "  1 2 3 4 \n" +
-              "A A1 A2 A3 A4 \n" +
-              "B B1 B2 B3 B4 \n" +
-              "C C1 C2 C3 C4 \n" +
-              "D D1 D2 D3 D4 \n"
+    first_row = "  " + columns.join(" ") + " \n"
+    next_rows = rows.map do |letter|
+                  coordinates = columns.map do |number|
+                                  "#{letter + number}"
+                                end
+                  letter + " " + coordinates.join(" ") + " \n"
+                end
+    board = first_row + next_rows.join
 
     cells.map do |coordinate, cell|
        board.sub!(coordinate, cell.render(show))
