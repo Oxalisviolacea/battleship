@@ -55,4 +55,20 @@ class GameTest < Minitest::Test
 
     assert_equal 5, actual
   end
+
+  def test_it_can_be_game_over
+    game = Game.new
+
+    refute game.game_over?
+
+    3.times do
+      game.computer_ships[0].hit
+    end
+
+    2.times do
+      game.computer_ships[1].hit
+    end
+
+    assert game.game_over?
+  end
 end
