@@ -1,25 +1,34 @@
 class Board
-  attr_reader :cells
+  attr_reader :cells, :width, :height
 
-  def initialize
-    @cells = {
-      "A1" => Cell.new("A1"),
-      "A2" => Cell.new("A2"),
-      "A3" => Cell.new("A3"),
-      "A4" => Cell.new("A4"),
-      "B1" => Cell.new("B1"),
-      "B2" => Cell.new("B2"),
-      "B3" => Cell.new("B3"),
-      "B4" => Cell.new("B4"),
-      "C1" => Cell.new("C1"),
-      "C2" => Cell.new("C2"),
-      "C3" => Cell.new("C3"),
-      "C4" => Cell.new("C4"),
-      "D1" => Cell.new("D1"),
-      "D2" => Cell.new("D2"),
-      "D3" => Cell.new("D3"),
-      "D4" => Cell.new("D4")
-      }
+  def initialize(width = 4, height = 4)
+    @width = width
+    @height = height
+    @cells = generate_board
+  end
+
+  def rows
+    letters = ["A"]
+    (height - 1).times do
+      letters << letters.last.succ
+    end
+    letters
+  end
+
+  def columns
+    (1..width).to_a.map do |number|
+      number.to_s
+    end
+  end
+
+  def generate_board
+    board = {}
+    rows.each do |letter|
+      columns.each do |number|
+        board[letter + number] = Cell.new(letter + number)
+      end
+    end
+    board
   end
 
   def valid_coordinate?(coordinate)
@@ -38,37 +47,37 @@ class Board
   end
 
   def no_diagonals?(ship, coordinates)
-    first = coordinates.map do |coordinate|
-      coordinate[0]
+    letters = coordinates.map do |coordinate|
+      coordinate.delete("^A-Z")
     end
 
-    second = coordinates.map do |coordinate|
-      coordinate[1]
+    numbers = coordinates.map do |coordinate|
+      coordinate.delete("^0-9")
     end
 
-    second.uniq.length == 1 || first.uniq.length == 1
+    letters.uniq.length == 1 || numbers.uniq.length == 1
   end
 
   def consecutive?(ship, coordinates)
-    first_chars = coordinates.map do |coordinate|
-      coordinate[0]
+    letters = coordinates.map do |coordinate|
+      coordinate.delete("^A-Z")
     end
 
-    second_chars = coordinates.map do |coordinate|
-      coordinate[1].to_i
+    numbers = coordinates.map do |coordinate|
+      coordinate.delete("^0-9")
     end
 
     consecutive_letters = []
-    ('A'..'D').each_cons(ship.length) do |letter|
+    rows.each_cons(ship.length) do |letter|
       consecutive_letters << letter
     end
 
     consecutive_numbers = []
-    (1..4).each_cons(ship.length) do |number|
+    columns.each_cons(ship.length) do |number|
       consecutive_numbers << number
     end
 
-    consecutive_letters.include?(first_chars) || consecutive_numbers.include?(second_chars)
+    consecutive_letters.include?(letters) || consecutive_numbers.include?(numbers)
   end
 
   def place(ship, coordinates)
@@ -86,11 +95,14 @@ class Board
   end
 
   def render(show = false)
-     board =  "  1 2 3 4 \n" +
-              "A A1 A2 A3 A4 \n" +
-              "B B1 B2 B3 B4 \n" +
-              "C C1 C2 C3 C4 \n" +
-              "D D1 D2 D3 D4 \n"
+    first_row = "  " + columns.join(" ") + " \n"
+    next_rows = rows.map do |letter|
+                  coordinates = columns.map do |number|
+                                  "#{letter + number}"
+                                end
+                  letter + " " + coordinates.join(" ") + " \n"
+                end
+    board = first_row + next_rows.join
 
     cells.map do |coordinate, cell|
        board.sub!(coordinate, cell.render(show))

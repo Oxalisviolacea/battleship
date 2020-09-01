@@ -1,5 +1,5 @@
 class Game
-  attr_reader :player_board, :computer_board
+  attr_reader :player_board, :computer_board, :player_ships, :computer_ships
 
   def initialize
     @player_board = Board.new
@@ -29,10 +29,38 @@ class Game
   end
 
   def start
+    create_custom_board
     create_custom_ship
     setup_computer_board
     setup_player_board
     play
+  end
+
+  def create_custom_board
+    puts "A default board is 4 cells by 4 cells."
+    puts "Would you like to create a custom board? Yes or No"
+    user_input = gets.chomp.capitalize
+    if user_input == "Yes"
+      puts "What is the board's width?:"
+      width = gets.chomp.to_i
+      until width > 2
+        puts "Please enter a width greater than 2:"
+        width = gets.chomp.to_i
+      end
+
+      puts "What is the board's height?:"
+      height = gets.chomp.to_i
+      until height > 2
+        puts "Please enter a height greater than 2:"
+        height = gets.chomp.to_i
+      end
+
+      @player_board = Board.new(width, height)
+      @computer_board = Board.new(width, height)
+    else
+      @player_board = Board.new
+      @computer_board = Board.new
+    end
   end
 
   def create_custom_ship
@@ -45,6 +73,10 @@ class Game
       name = gets.chomp
       puts "What's the ship's length?"
       length = gets.chomp.to_i
+      until length <= @player_board.height || length <= @player_board.width
+        puts "Please enter a length smaller than the board dimensions of #{@player_board.width} by #{@player_board.height}:"
+        length = gets.chomp.to_i
+      end
 
       custom_player_ship = Ship.new(name, length)
       custom_computer_ship = Ship.new(name, length)
@@ -116,5 +148,3 @@ class Game
     false
   end
 end
-
-#reset board between games

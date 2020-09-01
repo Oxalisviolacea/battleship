@@ -19,6 +19,28 @@ class BoardTest < Minitest::Test
     assert_instance_of Cell, board.cells["A1"]
   end
 
+  def test_it_has_length_and_width
+    board = Board.new(3, 5)
+
+    assert_equal 3, board.width
+    assert_equal 5, board.height
+  end
+
+  def test_it_has_rows_and_columns
+    board = Board.new(3, 5)
+
+    assert_equal ["A", "B", "C", "D", "E"], board.rows
+    assert_equal ["1", "2", "3"], board.columns
+  end
+
+  def test_it_can_generate_board
+    board = Board.new(3,3)
+
+    cells = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
+
+    assert_equal cells, board.generate_board.keys
+  end
+
   def test_valid_coordinates
     board = Board.new
 
