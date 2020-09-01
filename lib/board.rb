@@ -1,24 +1,31 @@
 class Board
-  attr_reader :cells
+  attr_reader :cells, :width, :height
 
   def initialize(width = 4, height = 4)
-    @cells = generate_board(width, height)
     @width = width
     @height = height
+    @cells = generate_board
   end
 
-  def generate_board(width, height)
-    columns = (1..width).to_a
-    rows = ["A"]
-
+  def rows
+    letters = ["A"]
     (height - 1).times do
-      rows << rows.last.succ
+      letters << letters.last.succ
     end
+    letters
+  end
 
+  def columns
+    (1..width).to_a.map do |number|
+      number.to_s
+    end
+  end
+
+  def generate_board
     board = {}
     rows.each do |letter|
       columns.each do |number|
-        board[letter + number.to_s] = Cell.new(letter + number.to_s)
+        board[letter + number] = Cell.new(letter + number)
       end
     end
     board
