@@ -41,10 +41,19 @@ class Game
     puts "Would you like to create a custom board? Yes or No"
     user_input = gets.chomp.capitalize
     if user_input == "Yes"
-      puts "What is the board's width?"
+      puts "What is the board's width?:"
       width = gets.chomp.to_i
-      puts "What is the board's height?"
+      until width > 2
+        puts "Please enter a width greater than 2:"
+        width = gets.chomp.to_i
+      end
+
+      puts "What is the board's height?:"
       height = gets.chomp.to_i
+      until height > 2
+        puts "Please enter a height greater than 2:"
+        height = gets.chomp.to_i
+      end
 
       @player_board = Board.new(width, height)
       @computer_board = Board.new(width, height)
