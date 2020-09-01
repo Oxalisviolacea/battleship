@@ -88,10 +88,19 @@ class Game
   def setup_computer_board
     @computer_ships.each do |ship|
       loop do
-        random_coordinates = []
+        starting_coordinate = @computer_board.cells.keys.sample
+        random_coordinates = [starting_coordinate]
+        random_direction = ["down", "right"].sample
 
         until random_coordinates.count == ship.length
-          random_coordinates << @computer_board.cells.keys.sample
+          if random_direction == "down"
+            #add next element down
+            letter = random_coordinates.last.delete("^A-Z")
+            number = random_coordinates.last.delete("^0-9")
+            random_coordinates << letter.succ + number
+          else #add next element to the right
+            random_coordinates << random_coordinates.last.succ
+          end
         end
 
         if @computer_board.valid_placement?(ship, random_coordinates)
